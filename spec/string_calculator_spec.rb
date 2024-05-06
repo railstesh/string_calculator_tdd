@@ -19,5 +19,13 @@ describe StringCalculator do
     it 'returns the sum for two parameters with additional strings' do
       expect(string_calculator.add("1,2,3,4,5")).to eq(15)
     end
+
+		it 'will handle new line in parameter' do
+      expect(string_calculator.add("1,2\n3")).to eq(6)
+    end
+
+    it 'retruns error msg if parameter includes ,\n at end' do
+      expect(string_calculator.add("1,2,3,\n")).to eq("Invalid Input")
+    end
   end
 end
