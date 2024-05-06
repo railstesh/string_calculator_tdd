@@ -1,20 +1,14 @@
 class StringCalculator
   def add(string)
     return 0 if string.empty?
-		
-		if invalid_input?(string)
-      return "Invalid Input"
-    end
+    return "Invalid Input" if invalid_input?(string)
 
     custom_delimiter = extract_custom_delimiter(string)
     separators = [",", "\n"]
     separators << custom_delimiter if custom_delimiter
-    numbers = string.split(/#{Regexp.union(separators)}/).map(&:to_i)
-    
-		negative_numbers = numbers.select { |num| num.negative? }
-    if negative_numbers.any?
-      raise RuntimeError, "negative numbers not allowed #{negative_numbers.join(",")}"
-    end
+
+    numbers = parse_numbers(string, separators)
+    raise_negative_error(numbers)
 
     numbers.sum
   end
@@ -22,12 +16,20 @@ class StringCalculator
 	private
 
   def invalid_input?(string)
-    string.match(/,\n\z/)
+    string.end_with?(",\n")
   end
 
-	def extract_custom_delimiter(string)
-    match = string.match(/^\/\/(.)\n/)
-    match[1] if match
+  def extract_custom_delimiter(string)
+    string.match(/^\/\/(.)\n/)&.captures&.first
+  end
+
+  def parse_numbers(string, separators)
+    string.split(/#{Regexp.union(separators)}/).map(&:to_i)
+  end
+
+  def raise_negative_error(numbers)
+    negative_numbers = numbers.select { |num| num.negative? }
+    raise "negative numbers not allowed #{negative_numbers.join(",")}" if negative_numbers.any?
   end
 end
   
