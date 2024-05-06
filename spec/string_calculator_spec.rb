@@ -11,5 +11,13 @@ describe StringCalculator do
     it 'returns the number for single parameter' do
       expect(string_calculator.add("1")).to eq(1)
     end
+
+		it 'returns the sum for two parameters' do
+      expect(string_calculator.add("1,2")).to eq(3)
+    end
+
+    it 'returns the sum for two parameters with additional strings' do
+      expect(string_calculator.add("1,2,3,4,5")).to eq(15)
+    end
   end
 end
