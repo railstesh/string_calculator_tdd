@@ -27,5 +27,9 @@ describe StringCalculator do
     it 'retruns error msg if parameter includes ,\n at end' do
       expect(string_calculator.add("1,2,3,\n")).to eq("Invalid Input")
     end
+
+		it 'can accept delimiters in following format "//[delimiter]\n"' do
+      expect(string_calculator.add("//;\n1;2")).to eq(3)
+    end
   end
 end
