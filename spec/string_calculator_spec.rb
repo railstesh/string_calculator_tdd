@@ -31,5 +31,11 @@ describe StringCalculator do
 		it 'can accept delimiters in following format "//[delimiter]\n"' do
       expect(string_calculator.add("//;\n1;2")).to eq(3)
     end
+
+		it 'should throw exception for negative numbers' do
+      expect { string_calculator.add("-1") }.to raise_error(RuntimeError, "negative numbers not allowed -1")
+      expect { string_calculator.add("-1, 2") }.to raise_error(RuntimeError, "negative numbers not allowed -1")
+      expect { string_calculator.add("-1, -2") }.to raise_error(RuntimeError, "negative numbers not allowed -1,-2")
+    end
   end
 end

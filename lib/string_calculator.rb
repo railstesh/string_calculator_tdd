@@ -10,6 +10,12 @@ class StringCalculator
     separators = [",", "\n"]
     separators << custom_delimiter if custom_delimiter
     numbers = string.split(/#{Regexp.union(separators)}/).map(&:to_i)
+    
+		negative_numbers = numbers.select { |num| num.negative? }
+    if negative_numbers.any?
+      raise RuntimeError, "negative numbers not allowed #{negative_numbers.join(",")}"
+    end
+
     numbers.sum
   end
 
